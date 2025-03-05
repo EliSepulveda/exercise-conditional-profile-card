@@ -22,6 +22,25 @@ import "../style/index.css";
         city: null
     }
  */
+
+function obtenerTituloTarjeta(nombre, apellido) {
+  let titulo_tarjeta = "";
+
+  if (nombre) {
+    titulo_tarjeta += nombre + " ";
+  }
+
+  if (apellido) {
+    titulo_tarjeta += apellido;
+  }
+
+  if (!titulo_tarjeta) {
+    titulo_tarjeta = "Nombre Apellido";
+  }
+
+  return titulo_tarjeta;
+}
+
 function render(variables = {}) {
   console.log("These are the current variables: ", variables); // print on the console
   // here we ask the logical questions to make decisions on how to build the html
@@ -29,18 +48,33 @@ function render(variables = {}) {
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
+  let titulo_tarjeta = obtenerTituloTarjeta(variables.name, variables.lastName);
+  let rol = variables.role ? variables.role : "Tu Rol";
+  let ciudad = variables.city ? variables.city : "Tu Ciudad";
+  let pais = variables.country ? variables.country : "Tu País";
+  let usuario_twitter = variables.twitter
+    ? variables.twitter
+    : "Usuario Twitter";
+  let usuario_github = variables.twitter ? variables.twitter : "Usuario Github";
+  let usuario_linkedin = variables.linkedin
+    ? variables.linkedin
+    : "Usuario LinkedIn";
+  let usuario_instagram = variables.instagram
+    ? variables.instagram
+    : "Usuario Instagram";
+
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1>${titulo_tarjeta}</h1>
+          <h2>${rol}</h2>
+          <h3>${ciudad + ", " + pais}</h3>
+          <ul class="${variables.socialMediaPosition}">
+            <li><a href="https://twitter.com/${usuario_twitter}"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${usuario_github}"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/in/${usuario_linkedin}"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/${usuario_instagram}"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
